@@ -1,47 +1,56 @@
 # build-budget-app
 
-Monorepo: Next.js (apps/web) + Nest.js (apps/api), PostgreSQL + Redis w Dockerze.
+A budgeting and documentation tracker for people managing a house construction project — projects, stages, expenses vs. planned budget, documents, and (planned) bank-ready PDF reports.
 
-## Pierwsze uruchomienie
+Monorepo: Next.js (`apps/web`) + Nest.js (`apps/api`), PostgreSQL + Redis via Docker.
+
+## Stack
+
+- **Frontend:** Next.js (App Router), TypeScript, Tailwind CSS, TanStack Query, Recharts
+- **Backend:** Nest.js, TypeScript, Prisma, PostgreSQL
+- **Auth:** JWT access + refresh tokens (Passport.js)
+- **Infra (planned):** Redis + BullMQ (background jobs), AWS S3 (file uploads), Stripe (billing), WebSockets (real-time collaboration)
+
+## Getting started
 
 ```bash
-# 1. Skopiuj zmienne środowiskowe
+# 1. Copy environment variables
 cp .env.example .env
 
-# 2. Uruchom bazę i Redis
+# 2. Start Postgres and Redis
 npm run docker:up
 
-# 3. Zainstaluj zależności (root + oba workspace'y)
+# 3. Install dependencies (root + both workspaces)
 npm install
 
-# 4. Wygeneruj klienta Prisma i zastosuj schemat
+# 4. Generate the Prisma client and apply the schema
 cd apps/api
 npx prisma generate
 npx prisma migrate dev --name init
 cd ../..
 
-# 5. Uruchom backend i frontend (dwa terminale)
+# 5. Run backend and frontend (two terminals)
 npm run dev:api
 npm run dev:web
 ```
 
 Frontend: http://localhost:3000
-API health-check: http://localhost:4000/health
+API health check: http://localhost:4000/health
 
-## Struktura
+## Project structure
 
 ```
 apps/
   web/    -> Next.js (App Router, TS, Tailwind, React Query, Recharts)
   api/    -> Nest.js (Prisma, PostgreSQL, Redis/BullMQ, JWT auth)
-docker-compose.yml -> Postgres + Redis do developmentu
+docker-compose.yml -> Postgres + Redis for local development
 ```
 
-## Dalsze kroki (patrz: dokument architektury)
+## Status
 
-1. AuthModule (JWT + refresh tokens)
-2. ProjectsModule, StagesModule, ExpensesModule (CRUD + Prisma)
-3. DocumentsModule (upload do S3 przez presigned URL)
-4. ReportsModule (generowanie PDF w kolejce BullMQ)
-5. BillingModule (Stripe Checkout + webhooks)
-6. WebSocket Gateway (współdzielenie projektu w czasie rzeczywistym)
+- [x] Auth (JWT + refresh tokens) — `POST /auth/register`, `/login`, `/refresh`, `/logout`
+- [ ] Projects / Stages / Expenses CRUD
+- [ ] Document uploads (S3 presigned URLs)
+- [ ] Background jobs (BullMQ) — PDF reports, notifications
+- [ ] Billing (Stripe)
+- [ ] Real-time collaboration (WebSockets)

@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
-  email           String   @unique
-  passwordHash    String
-  plan            String   @default("free")
-  stripeCustomerId String?
-  createdAt       DateTime @default(now())
+  id                  String   @id @default(uuid())
+  email               String   @unique
+  passwordHash        String
+  hashedRefreshToken  String?
+  plan                String   @default("free")
+  stripeCustomerId    String?
+  createdAt           DateTime @default(now())
 
-  projects        Project[]
+  projects            Project[]
 }
 
 model Project {
