@@ -6,9 +6,9 @@ import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
 import { StagesModule } from './stages/stages.module';
 import { ExpensesModule } from './expenses/expenses.module';
+import { DocumentsModule } from './documents/documents.module';
 
-// Planned modules: DocumentsModule, ReportsModule, BenchmarkModule,
-// NotificationsModule, BillingModule
+// Planned modules: ReportsModule, BenchmarkModule, NotificationsModule, BillingModule
 
 @Module({
   imports: [
@@ -18,6 +18,7 @@ import { ExpensesModule } from './expenses/expenses.module';
     ProjectsModule,
     StagesModule,
     ExpensesModule,
+    DocumentsModule,
   ],
   controllers: [AppController],
 })
