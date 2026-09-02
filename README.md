@@ -49,7 +49,7 @@ docker-compose.yml -> Postgres + Redis for local development
 ## Status
 
 - [x] Auth (JWT + refresh tokens) — `POST /auth/register`, `/login`, `/refresh`, `/logout`
-- [ ] Projects / Stages / Expenses CRUD
+- [x] Projects / Stages / Expenses CRUD — `/projects`, `/projects/:id/stages`, `/projects/:id/expenses`, `/projects/:id/summary`
 - [ ] Document uploads (S3 presigned URLs)
 - [ ] Background jobs (BullMQ) — PDF reports, notifications
 - [ ] Billing (Stripe)

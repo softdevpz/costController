@@ -39,7 +39,7 @@ model Project {
 model Stage {
   id            String   @id @default(uuid())
   projectId     String
-  project       Project  @relation(fields: [projectId], references: [id])
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   name          String
   order         Int
   plannedBudget Decimal?
@@ -52,7 +52,7 @@ model Stage {
 model Expense {
   id             String   @id @default(uuid())
   projectId      String
-  project        Project  @relation(fields: [projectId], references: [id])
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   stageId        String?
   stage          Stage?   @relation(fields: [stageId], references: [id])
   category       String
@@ -68,7 +68,7 @@ model Expense {
 model Document {
   id         String   @id @default(uuid())
   projectId  String
-  project    Project  @relation(fields: [projectId], references: [id])
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   type       String
   fileUrl    String
   uploadedAt DateTime @default(now())
@@ -77,7 +77,7 @@ model Document {
 model TaskItem {
   id        String   @id @default(uuid())
   projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   stageId   String?
   stage     Stage?   @relation(fields: [stageId], references: [id])
   title     String
