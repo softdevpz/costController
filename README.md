@@ -37,6 +37,8 @@ npm run dev:web
 Frontend: http://localhost:3000
 API health check: http://localhost:4000/health
 
+To test Stripe webhooks locally, forward events with the [Stripe CLI](https://docs.stripe.com/stripe-cli): `stripe listen --forward-to localhost:4000/billing/webhook` (its output gives you `STRIPE_WEBHOOK_SECRET`).
+
 ## Project structure
 
 ```
@@ -53,5 +55,5 @@ docker-compose.yml -> Postgres + Redis + Mailpit (dev SMTP catcher, UI at http:/
 - [x] Document uploads (S3 presigned URLs) — `/projects/:id/documents`, `/documents/presign`
 - [x] Background jobs (BullMQ) — async PDF bank reports: `POST /projects/:id/reports`, `GET /projects/:id/reports[/:reportId]`
 - [x] Notifications — daily deadline check (BullMQ + `@nestjs/schedule`) emails a reminder for tasks due within 3 days; `POST /notifications/check-deadlines-now` to trigger on demand
-- [ ] Billing (Stripe)
+- [x] Billing (Stripe) — free plan limited to 1 project; `POST /billing/checkout-session`, `GET /billing/status`, `POST /billing/webhook`
 - [ ] Real-time collaboration (WebSockets)

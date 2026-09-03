@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Project } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { PLAN_LIMITS } from '../common/plan-limits';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 
@@ -8,7 +9,17 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 export class ProjectsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(userId: string, dto: CreateProjectDto) {
+  async create(userId: string, dto: CreateProjectDto) {
+    const user = await this.prisma.user.findUniqueOrThrow({ where: { id: userId } });
+    const limit = PLAN_LIMITS[user.plan as keyof typeof PLAN_LIMITS]?.maxProjects ?? PLAN_LIMITS.free.maxProjects;
+    const projectCount = await this.prisma.project.count({ where: { userId } });
+    if (projectCount >= limit) {
+      throw new HttpException(
+        `Your ${user.plan} plan is limited to ${limit} project(s). Upgrade to Premium for more.`,
+        HttpStatus.PAYMENT_REQUIRED,
+      );
+    }
+
     return this.prisma.project.create({
       data: {
         userId,

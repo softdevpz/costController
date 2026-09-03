@@ -12,8 +12,9 @@ import { DocumentsModule } from './documents/documents.module';
 import { ReportsModule } from './reports/reports.module';
 import { TasksModule } from './tasks/tasks.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { BillingModule } from './billing/billing.module';
 
-// Planned modules: BenchmarkModule, BillingModule
+// Planned modules: BenchmarkModule
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     ReportsModule,
     TasksModule,
     NotificationsModule,
+    BillingModule,
   ],
   controllers: [AppController],
 })
