@@ -83,7 +83,8 @@ model TaskItem {
   stage     Stage?   @relation(fields: [stageId], references: [id])
   title     String
   dueDate   DateTime?
-  done      Boolean  @default(false)
+  done      Boolean   @default(false)
+  remindedAt DateTime?
 }
 
 model Report {

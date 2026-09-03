@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
@@ -9,12 +10,15 @@ import { StagesModule } from './stages/stages.module';
 import { ExpensesModule } from './expenses/expenses.module';
 import { DocumentsModule } from './documents/documents.module';
 import { ReportsModule } from './reports/reports.module';
+import { TasksModule } from './tasks/tasks.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
-// Planned modules: BenchmarkModule, NotificationsModule, BillingModule
+// Planned modules: BenchmarkModule, BillingModule
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     BullModule.forRoot({
       connection: {
         host: process.env.REDIS_HOST ?? 'localhost',
@@ -28,6 +32,8 @@ import { ReportsModule } from './reports/reports.module';
     ExpensesModule,
     DocumentsModule,
     ReportsModule,
+    TasksModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
 })

@@ -43,7 +43,7 @@ API health check: http://localhost:4000/health
 apps/
   web/    -> Next.js (App Router, TS, Tailwind, React Query, Recharts)
   api/    -> Nest.js (Prisma, PostgreSQL, Redis/BullMQ, JWT auth)
-docker-compose.yml -> Postgres + Redis for local development
+docker-compose.yml -> Postgres + Redis + Mailpit (dev SMTP catcher, UI at http://localhost:8025) for local development
 ```
 
 ## Status
@@ -52,6 +52,6 @@ docker-compose.yml -> Postgres + Redis for local development
 - [x] Projects / Stages / Expenses CRUD — `/projects`, `/projects/:id/stages`, `/projects/:id/expenses`, `/projects/:id/summary`
 - [x] Document uploads (S3 presigned URLs) — `/projects/:id/documents`, `/documents/presign`
 - [x] Background jobs (BullMQ) — async PDF bank reports: `POST /projects/:id/reports`, `GET /projects/:id/reports[/:reportId]`
-- [ ] Notifications (email reminders for upcoming stage deadlines)
+- [x] Notifications — daily deadline check (BullMQ + `@nestjs/schedule`) emails a reminder for tasks due within 3 days; `POST /notifications/check-deadlines-now` to trigger on demand
 - [ ] Billing (Stripe)
 - [ ] Real-time collaboration (WebSockets)
