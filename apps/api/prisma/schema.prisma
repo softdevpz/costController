@@ -17,6 +17,7 @@ model User {
   createdAt           DateTime @default(now())
 
   projects            Project[]
+  subscription        Subscription?
 }
 
 model Project {
@@ -96,6 +97,16 @@ model Report {
   error       String?
   requestedAt DateTime  @default(now())
   completedAt DateTime?
+}
+
+model Subscription {
+  id                   String   @id @default(uuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id])
+  stripeSubscriptionId String   @unique
+  plan                 String
+  status               String
+  currentPeriodEnd     DateTime
 }
 
 model BenchmarkStat {
