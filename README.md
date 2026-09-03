@@ -51,6 +51,7 @@ docker-compose.yml -> Postgres + Redis for local development
 - [x] Auth (JWT + refresh tokens) — `POST /auth/register`, `/login`, `/refresh`, `/logout`
 - [x] Projects / Stages / Expenses CRUD — `/projects`, `/projects/:id/stages`, `/projects/:id/expenses`, `/projects/:id/summary`
 - [x] Document uploads (S3 presigned URLs) — `/projects/:id/documents`, `/documents/presign`
-- [ ] Background jobs (BullMQ) — PDF reports, notifications
+- [x] Background jobs (BullMQ) — async PDF bank reports: `POST /projects/:id/reports`, `GET /projects/:id/reports[/:reportId]`
+- [ ] Notifications (email reminders for upcoming stage deadlines)
 - [ ] Billing (Stripe)
 - [ ] Real-time collaboration (WebSockets)

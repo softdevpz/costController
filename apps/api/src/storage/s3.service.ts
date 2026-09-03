@@ -10,6 +10,17 @@ export class S3Service {
   private readonly client = new S3Client({ region: process.env.AWS_REGION });
   private readonly bucket = process.env.AWS_S3_BUCKET as string;
 
+  uploadBuffer(key: string, body: Buffer, contentType: string) {
+    return this.client.send(
+      new PutObjectCommand({
+        Bucket: this.bucket,
+        Key: key,
+        Body: body,
+        ContentType: contentType,
+      }),
+    );
+  }
+
   getUploadUrl(key: string, contentType: string) {
     const command = new PutObjectCommand({
       Bucket: this.bucket,
